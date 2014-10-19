@@ -4,8 +4,7 @@ $.ajaxSetup ({
 
 function populateChat() {
 	var url = "/chat";
-	$("#ChatHistory").load(url).fail(function(){
-		$("#ChatHistory").text("Failed to Load.");});
+	$("#ChatHistory").load(url);
 }
 
 setInterval(populateChat, 1000);

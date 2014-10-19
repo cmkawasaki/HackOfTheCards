@@ -4,7 +4,7 @@
 	</head>
 	<body>
 	<div id="ChatHistory">Loading...</div>
-		<form action="/write" method="post">
+		<form action="/write" method="get">
 			<div>User Name: <input value="{{ username }}" name="chat_name"></div>
 			<div><textarea name="content" rows="3" cols="60"></textarea></div>
 			<div><input type="submit" value="Add Message"></div>

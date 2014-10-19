@@ -47,7 +47,7 @@ def hello():
 
 	return render_template('index.html', username=user)
 
-@app.route('/write', methods=['POST'])
+@app.route('/write', methods=['GET'])
 def write():
 	user = request.args.get('chat_name')
 	message = request.args.get('content')

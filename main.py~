@@ -47,10 +47,17 @@ def hello():
 
 	return render_template('index.html', username=user)
 
-@app.route('/write', methods=['POST'])
+@app.route('/write', methods=['GET', 'POST'])
 def write():
 	user = request.args.get('chat_name')
 	message = request.args.get('content')
+
+	if user is None:
+		user = "Anonymous"
+	
+	if message is None:
+		message = ""
+
 	chat = ChatLog(parent=chatlog_key(DEFAULT_CHAT_NAME))
 	chat.author = user
 	chat.content = message
