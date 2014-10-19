@@ -11,5 +11,6 @@
 		</form>
 
 		<script type="text/javascript" src="Scripts/chat.js"></script>
+		<script type="text/javascript">$("#ChatHistory").load('/chat');</script>
 	</body>
 </html>
