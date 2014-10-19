@@ -4,7 +4,13 @@ $.ajaxSetup ({
 
 function populateChat() {
 	var url = "/chat";
-	$("#ChatHistory").load(url);});
+	$("#ChatHistory").load(url);
 }
 
+function chatSubmit(e) {
+	$.ajax({ type: "POST", url: '/write', data:$('#ChatForm').serializeArray()});
+	populateChat();
+	e.preventDefault();
+}
+	
 setInterval(populateChat, 1000);

@@ -3,13 +3,16 @@
 		<script type="text/javascript" src="Scripts/jquery-1.11.1.js"></script>
 	</head>
 	<body>
+	<script type="text/javascript" src="Scripts/chat.js"></script>
 	<div id="ChatHistory">Loading...</div>
-		<form action="/write" method="get">
+		<form id="ChatForm" action="/write" method="post">
 			<div>User Name: <input value="{{ username }}" name="chat_name"></div>
 			<div><textarea name="content" rows="3" cols="60"></textarea></div>
 			<div><input type="submit" value="Add Message"></div>
 		</form>
-
-		<script type="text/javascript" src="Scripts/chat.js"></script>
+		<script type="text/javascript">
+			var form = $("#ChatForm");
+			form.submit(chatSubmit());
+		</script>
 	</body>
 </html>

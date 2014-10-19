@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import jsonify
+from flask import make_response
 
 import cgi
 import urllib
@@ -47,11 +48,20 @@ def hello():
 
 	return render_template('index.html', username=user)
 
-@app.route('/write', methods=['GET'])
-def write():
-	user = request.args.get('chat_name')
-	message = request.args.get('content')
+@app.route('/write', methods=['GET', 'POST'])
+def writeMe():
+	if request.method == 'GET':
+		user = request.args.get('chat_name')
+		message = request.args.get('content')
+	else:
+		if request.json:
+			user = request.json('chat_name')
+			message = request.json('content')
+		else:
+			user = request.form['chat_name']
+			message = request.form['content']
 
+	app.logger.error(request)
 	if user is None:
 		user = "Anonymous"
 	
@@ -62,13 +72,13 @@ def write():
 	chat.author = user
 	chat.content = message
 	chat.put()
-	query_params = {'name': user}
-	return redirect('/?' + urllib.urlencode(query_params))
+	return make_response("", 200)
 
 @app.route('/chat', methods=['GET'])
 def getLogs():
-	historyQuery = ChatLog.query(ancestor = chatlog_key(DEFAULT_CHAT_NAME)).order(+ChatLog.date)
+	historyQuery = ChatLog.query(ancestor = chatlog_key(DEFAULT_CHAT_NAME)).order(-ChatLog.date)
 	history = historyQuery.fetch(10)
+	history.reverse()
 	chatlist = []
 	for item in history:
 		if item.author is None:
